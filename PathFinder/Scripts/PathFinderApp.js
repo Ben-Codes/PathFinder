@@ -1,5 +1,26 @@
 ﻿$(function () {
 
+
+    //Listeners
+    $('#CalcBtn').on("click", function () {
+        var points = { Stage: { Height: stage.getHeight(), Width: stage.getWidth() },
+                        Origin: { X: origin.getX(), Y: origin.getY() },
+                        Destination: { X: destination.getX(), Y: destination.getY() },
+                        Obstacle: { Location : { X: box.getX(), Y: box.getY() }, Height: box.getHeight(), Width: box.getWidth() } };
+
+        $.ajax({
+            url: 'home/plotpath/',
+            data: JSON.stringify(points),
+            dataType: 'json',
+            contentType: 'application/json',
+            type: 'POST',
+            success: function (data) {
+                alert(data);
+            }
+        });
+    });
+
+
     //Grid Stage
     var stage = new Kinetic.Stage({
         container: 'gridCanvas',
@@ -28,7 +49,6 @@
     }
 
     
-
     ////////
     //Obstacle Stage
 

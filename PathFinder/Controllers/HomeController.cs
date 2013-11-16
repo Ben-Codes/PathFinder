@@ -17,7 +17,14 @@ namespace Path_finder.Controllers
         [HttpPost]
         public ActionResult PlotPath(PathingMap pathingMap)
         {
-            return Json(pathingMap);
+
+            var points = new []{   
+                            new Point(){ x = 50, y = 50 },
+                            new Point(){ x = 100, y = 100 },
+                            new Point(){ x = 100, y = 150 } 
+                        };
+
+            return Json(points);
         }
     }
 }

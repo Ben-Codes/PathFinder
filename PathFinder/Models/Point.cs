@@ -7,7 +7,8 @@ namespace Path_finder.Models
 {
     public class Point
     {
-        public int X { get; set; }
-        public int Y { get; set; }
+        //lowercase to make point canvas system happy
+        public int x { get; set; }
+        public int y { get; set; }
     }
 }

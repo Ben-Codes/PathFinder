@@ -3,10 +3,28 @@
 
     //Listeners
     $('#CalcBtn').on("click", function () {
-        var points = { Stage: { Height: stage.getHeight(), Width: stage.getWidth() },
-                        Origin: { X: origin.getX(), Y: origin.getY() },
-                        Destination: { X: destination.getX(), Y: destination.getY() },
-                        Obstacle: { Location : { X: box.getX(), Y: box.getY() }, Height: box.getHeight(), Width: box.getWidth() } };
+        var points = {
+            Stage: {
+                Height: stage.getHeight(),
+                Width: stage.getWidth()
+            },
+            Origin: {
+                X: origin.getX(),
+                Y: origin.getY()
+            },
+            Destination: {
+                X: destination.getX(),
+                Y: destination.getY()
+            },
+            Obstacle: {
+                Location: {
+                    X: box.getX(),
+                    Y: box.getY()
+                },
+                Height: box.getHeight(),
+                Width: box.getWidth()
+            }
+        };
 
         $.ajax({
             url: 'home/plotpath/',
@@ -15,7 +33,7 @@
             contentType: 'application/json',
             type: 'POST',
             success: function (data) {
-                alert(data);
+                renderPoints(data);
             }
         });
     });
@@ -48,7 +66,7 @@
         }
     }
 
-    
+
     ////////
     //Obstacle Stage
 
@@ -67,7 +85,7 @@
     });
 
     box.on('dragend', function (evnt) {
-        
+
         var localBox = box;
 
         var xPos = 50 * Math.round(localBox.getX() / 50);
@@ -76,7 +94,6 @@
         localBox.setX(xPos);
         localBox.setY(yPos);
         boxlayer.draw();
-
     });
 
     box.on('mousedown', function (evnt) {
@@ -90,8 +107,9 @@
         var isShift = evt.shiftKey;
 
         switch (evt.keyCode) {
-            case 38:  /* Up arrow was pressed */
-              
+            case 38:
+                /* Up arrow was pressed */
+
                 var localBox = box;
 
                 if (isShift) {
@@ -107,7 +125,8 @@
                 }
 
                 break;
-            case 40:  /* Down arrow was pressed */
+            case 40:
+                /* Down arrow was pressed */
 
                 var localBox = box;
 
@@ -115,13 +134,14 @@
                     localBox.setHeight(localBox.getHeight() + 50);
                     boxlayer.draw();
 
-                }else {
+                } else {
                     localBox.setY(localBox.getY() + 50);
                     boxlayer.draw();
                 }
 
                 break;
-            case 37:  /* Left arrow was pressed */
+            case 37:
+                /* Left arrow was pressed */
 
                 var localBox = box;
 
@@ -136,7 +156,8 @@
                 }
 
                 break;
-            case 39:  /* Right arrow was pressed */
+            case 39:
+                /* Right arrow was pressed */
                 var localBox = box;
 
                 if (isShift) {
@@ -151,7 +172,7 @@
                 break;
         }
     }
-    
+
     //// add cursor styling
     box.on('mouseover', function () {
         document.body.style.cursor = 'pointer';
@@ -179,11 +200,27 @@
 
     endpointLayer.add(destination);
 
+    var pathLayer = new Kinetic.Layer();
+
     stage.add(endpointLayer);
     stage.add(boxlayer);
     stage.add(layer);
+    stage.add(pathLayer);
     boxlayer.add(box);
 
     stage.add(boxlayer);
 
+    function renderPoints(points) {
+        debugger;
+        var redLine = new Kinetic.Line({
+            points: points,
+            stroke: 'red',
+            strokeWidth: 5,
+            lineCap: 'round',
+            lineJoin: 'round'
+        });
+
+        pathLayer.add(redLine);
+        pathLayer.draw();
+    }
 });

@@ -1,0 +1,5 @@
+C:\Users\Ben\Documents\GitHub\PathFinder\PathFinderCommon\bin\Debug\PathFinderCommon.dll
+C:\Users\Ben\Documents\GitHub\PathFinder\PathFinderCommon\bin\Debug\PathFinderCommon.pdb
+C:\Users\Ben\Documents\GitHub\PathFinder\PathFinderCommon\obj\Debug\PathFinderCommon.csprojResolveAssemblyReference.cache
+C:\Users\Ben\Documents\GitHub\PathFinder\PathFinderCommon\obj\Debug\PathFinderCommon.dll
+C:\Users\Ben\Documents\GitHub\PathFinder\PathFinderCommon\obj\Debug\PathFinderCommon.pdb

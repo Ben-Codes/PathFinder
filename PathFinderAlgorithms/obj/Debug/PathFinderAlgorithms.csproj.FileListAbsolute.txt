@@ -1,0 +1,7 @@
+C:\Users\Ben\Documents\GitHub\PathFinder\PathFinderAlgorithms\obj\Debug\PathFinderAlgorithms.csprojResolveAssemblyReference.cache
+C:\Users\Ben\Documents\GitHub\PathFinder\PathFinderAlgorithms\bin\Debug\PathFinderAlgorithms.dll
+C:\Users\Ben\Documents\GitHub\PathFinder\PathFinderAlgorithms\bin\Debug\PathFinderAlgorithms.pdb
+C:\Users\Ben\Documents\GitHub\PathFinder\PathFinderAlgorithms\bin\Debug\PathFinderCommon.dll
+C:\Users\Ben\Documents\GitHub\PathFinder\PathFinderAlgorithms\bin\Debug\PathFinderCommon.pdb
+C:\Users\Ben\Documents\GitHub\PathFinder\PathFinderAlgorithms\obj\Debug\PathFinderAlgorithms.dll
+C:\Users\Ben\Documents\GitHub\PathFinder\PathFinderAlgorithms\obj\Debug\PathFinderAlgorithms.pdb

@@ -168,3 +168,7 @@ C:\Users\Ben\Documents\GitHub\PathFinder\PathFinder\bin\zh-Hant\System.Spatial.r
 C:\Users\Ben\Documents\GitHub\PathFinder\PathFinder\obj\Debug\PathFinder.csprojResolveAssemblyReference.cache
 C:\Users\Ben\Documents\GitHub\PathFinder\PathFinder\obj\Debug\Path finder.dll
 C:\Users\Ben\Documents\GitHub\PathFinder\PathFinder\obj\Debug\Path finder.pdb
+C:\Users\Ben\Documents\GitHub\PathFinder\PathFinder\bin\PathFinderCommon.dll
+C:\Users\Ben\Documents\GitHub\PathFinder\PathFinder\bin\PathFinderCommon.pdb
+C:\Users\Ben\Documents\GitHub\PathFinder\PathFinder\bin\PathFinderAlgorithms.dll
+C:\Users\Ben\Documents\GitHub\PathFinder\PathFinder\bin\PathFinderAlgorithms.pdb

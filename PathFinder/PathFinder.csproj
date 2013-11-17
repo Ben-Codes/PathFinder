@@ -185,10 +185,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\PathingMap.cs" />
-    <Compile Include="Models\Point.cs" />
-    <Compile Include="Models\Rectangle.cs" />
-    <Compile Include="Models\Stage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -299,6 +295,19 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PathFinderAlgorithms\PathFinderAlgorithms.csproj">
+      <Project>{37c93d0a-0c83-417d-9b8e-64a046880f4f}</Project>
+      <Name>PathFinderAlgorithms</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PathFinderCommon\PathFinderCommon.csproj">
+      <Project>{8146d231-3331-4ee3-8210-81b77d07fb90}</Project>
+      <Name>PathFinderCommon</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

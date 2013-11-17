@@ -200,3 +200,7 @@ C:\Users\Ben\Documents\GitHub\PathFinder\PathFinder.Tests\bin\Debug\zh-Hant\Syst
 C:\Users\Ben\Documents\GitHub\PathFinder\PathFinder.Tests\obj\Debug\Path finder.Tests.csprojResolveAssemblyReference.cache
 C:\Users\Ben\Documents\GitHub\PathFinder\PathFinder.Tests\obj\Debug\Path finder.Tests.dll
 C:\Users\Ben\Documents\GitHub\PathFinder\PathFinder.Tests\obj\Debug\Path finder.Tests.pdb
+C:\Users\Ben\Documents\GitHub\PathFinder\PathFinder.Tests\bin\Debug\PathFinderCommon.dll
+C:\Users\Ben\Documents\GitHub\PathFinder\PathFinder.Tests\bin\Debug\PathFinderCommon.pdb
+C:\Users\Ben\Documents\GitHub\PathFinder\PathFinder.Tests\bin\Debug\PathFinderAlgorithms.dll
+C:\Users\Ben\Documents\GitHub\PathFinder\PathFinder.Tests\bin\Debug\PathFinderAlgorithms.pdb

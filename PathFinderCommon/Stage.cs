@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Path_finder.Models
+namespace PathFinderCommon
 {
     public class Stage
     {
-        public int Width { get; set; }
-        public int Height { get; set; }
+        public int Width { get; set;}
+        public int Height{ get; set; }
     }
 }

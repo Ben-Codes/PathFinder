@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Path_finder.Models;
+using PathFinderCommon;
+using PathFinderAlgorithms;
 
 namespace Path_finder.Controllers
 {
@@ -18,13 +19,32 @@ namespace Path_finder.Controllers
         public ActionResult PlotPath(PathingMap pathingMap)
         {
 
-            var points = new []{   
-                            new Point(){ x = 50, y = 50 },
-                            new Point(){ x = 100, y = 100 },
-                            new Point(){ x = 100, y = 150 } 
-                        };
+            pathingMap.Destination.x = pathingMap.Destination.x / 50;
+            pathingMap.Destination.y = pathingMap.Destination.y / 50;
+
+            pathingMap.Origin.x = pathingMap.Origin.x / 50;
+            pathingMap.Origin.y = pathingMap.Origin.y / 50;
+
+            pathingMap.Stage.Height = pathingMap.Stage.Height / 50;
+            pathingMap.Stage.Width = pathingMap.Stage.Width / 50;
+
+
+            var router = new AStarRouting();
+            var points = router.FindRoute(pathingMap);
+            points = MultiplyPoint(points);
 
             return Json(points);
+        }
+
+        private Point[] MultiplyPoint(Point[] points)
+        {
+            foreach (var point in points)
+            {
+                point.x = point.x * 50;
+                point.y = point.y * 50;
+            }
+
+            return points;
         }
     }
 }

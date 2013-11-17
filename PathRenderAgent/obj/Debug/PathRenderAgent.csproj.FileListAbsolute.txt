@@ -1,0 +1,6 @@
+C:\Users\Ben\Documents\GitHub\PathFinder\PathRenderAgent\bin\Debug\PathRenderAgent.exe.config
+C:\Users\Ben\Documents\GitHub\PathFinder\PathRenderAgent\bin\Debug\PathRenderAgent.exe
+C:\Users\Ben\Documents\GitHub\PathFinder\PathRenderAgent\bin\Debug\PathRenderAgent.pdb
+C:\Users\Ben\Documents\GitHub\PathFinder\PathRenderAgent\obj\Debug\PathRenderAgent.csprojResolveAssemblyReference.cache
+C:\Users\Ben\Documents\GitHub\PathFinder\PathRenderAgent\obj\Debug\PathRenderAgent.exe
+C:\Users\Ben\Documents\GitHub\PathFinder\PathRenderAgent\obj\Debug\PathRenderAgent.pdb

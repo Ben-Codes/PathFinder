@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Path_finder.Models
+namespace PathFinderCommon
 {
     public class Rectangle
     {

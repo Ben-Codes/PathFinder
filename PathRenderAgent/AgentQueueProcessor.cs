@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace PathRenderAgent
@@ -12,7 +13,7 @@ namespace PathRenderAgent
         #region "Private Vars"
 
         private static AgentQueueProcessor instance;
-
+        private bool RunFlag = true;
         #endregion
 
         #region "Contructor"
@@ -42,12 +43,15 @@ namespace PathRenderAgent
 
         public void StartProcess(string[] args)
         {
-
+            while (RunFlag)
+            {
+                Thread.Sleep(100);
+            }
         }
 
         public void StopProcess()
         {
-
+            RunFlag = false;
         }
 
 

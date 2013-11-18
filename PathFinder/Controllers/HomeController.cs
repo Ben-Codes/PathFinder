@@ -19,32 +19,15 @@ namespace Path_finder.Controllers
         public ActionResult PlotPath(PathingMap pathingMap)
         {
 
-            pathingMap.Destination.x = pathingMap.Destination.x / 50;
-            pathingMap.Destination.y = pathingMap.Destination.y / 50;
-
-            pathingMap.Origin.x = pathingMap.Origin.x / 50;
-            pathingMap.Origin.y = pathingMap.Origin.y / 50;
-
-            pathingMap.Stage.Height = pathingMap.Stage.Height / 50;
-            pathingMap.Stage.Width = pathingMap.Stage.Width / 50;
-
+            pathingMap = UnitConverter.ConvertMapToBaseUnits(pathingMap, Globals.UNIT_RATIO);
 
             var router = new AStarRouting();
             var points = router.FindRoute(pathingMap);
-            points = MultiplyPoint(points);
+
+            points = UnitConverter.ConvertPointsToDisplayUnits(points, Globals.UNIT_RATIO);
 
             return Json(points);
         }
 
-        private Point[] MultiplyPoint(Point[] points)
-        {
-            foreach (var point in points)
-            {
-                point.x = point.x * 50;
-                point.y = point.y * 50;
-            }
-
-            return points;
-        }
     }
 }

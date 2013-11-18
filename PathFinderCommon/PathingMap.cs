@@ -10,6 +10,6 @@ namespace PathFinderCommon
         public Point Origin { get; set; }
         public Point Destination { get; set; }
         public Stage Stage { get; set; }
-        public Rectangle Obstacles { get; set; }
+        public Rectangle[] Obstacles { get; set; }
     }
 }

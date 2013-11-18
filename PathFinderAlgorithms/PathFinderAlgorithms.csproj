@@ -40,8 +40,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AStarRouting.cs" />
-    <Compile Include="MapGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UnitConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PathFinderCommon\PathFinderCommon.csproj">

@@ -12,7 +12,7 @@ namespace PathFinderAlgorithms
 
 #region "Private Variables"
 
-        private int _DIAGONAL_MOVEMENT_COST = 10;
+        private int _DIAGONAL_MOVEMENT_COST = 12;
         private int _LINEAR_MOVEMENT_COST = 10;
 
         private int _mapHeight;
@@ -47,6 +47,8 @@ namespace PathFinderAlgorithms
             _map[_origin.x, _origin.y] = new Node(_origin.x, _origin.y, _destination.x, _destination.y);
 
 
+            MarkObstaclesAsInaccessible(pathingMap.Obstacles);
+
             //Setup Open List to begin node scan
             Node[] _adjacentsNodes = GetAdjacentNodes(_map[_origin.x, _origin.y]);
             _closedList.Add(_map[_origin.x, _origin.y]);
@@ -66,6 +68,7 @@ namespace PathFinderAlgorithms
                 AddToClosedList(currentNode);
 
                 _adjacentsNodes = GetAdjacentNodes(currentNode);
+
                 for (int i = 0; i < _adjacentsNodes.Length; i++)
                 {
                     if (!ContaintedInList( _adjacentsNodes[i], _closedList))
@@ -95,10 +98,9 @@ namespace PathFinderAlgorithms
                         }
                     }
                 }
-
             }
 
-            Node finalNode = GetNodeWithLowestMovementCost(_adjacentsNodes);
+            Node finalNode = GetNodeWithLowestCost(_adjacentsNodes);
             return GetPath(finalNode);
         }
 
@@ -121,8 +123,13 @@ namespace PathFinderAlgorithms
                 if (IsInMapBounds(currentX, currentY))
                 {
                     _map[currentX, currentY] = GetSingleAdjacentNode(currentX, currentY);
-                    _map[currentX, currentY].MovementCostFromCurrentAdjacent = _DIAGONAL_MOVEMENT_COST;
-                    nodes.Add( _map[currentX, currentY]);
+
+                    if (!_map[currentX, currentY].IsInaccessible)
+                    {
+                        _map[currentX, currentY].MovementCostFromCurrentAdjacent = _DIAGONAL_MOVEMENT_COST;
+
+                        nodes.Add( _map[currentX, currentY]);
+                    }
                 }
 
                 //Top Node
@@ -132,8 +139,12 @@ namespace PathFinderAlgorithms
                 if (IsInMapBounds(currentX, currentY))
                 {
                     _map[currentX, currentY] = GetSingleAdjacentNode(currentX, currentY);
-                    _map[currentX, currentY].MovementCostFromCurrentAdjacent = _LINEAR_MOVEMENT_COST;
-                    nodes.Add(_map[currentX, currentY]);
+
+                    if (!_map[currentX, currentY].IsInaccessible)
+                    {
+                        _map[currentX, currentY].MovementCostFromCurrentAdjacent = _LINEAR_MOVEMENT_COST;
+                        nodes.Add(_map[currentX, currentY]);
+                    }
                 }
 
 
@@ -144,8 +155,12 @@ namespace PathFinderAlgorithms
                 if (IsInMapBounds(currentX, currentY))
                 {
                     _map[currentX, currentY] = GetSingleAdjacentNode(currentX, currentY);
-                    _map[currentX, currentY].MovementCostFromCurrentAdjacent = _DIAGONAL_MOVEMENT_COST;
-                    nodes.Add(_map[currentX, currentY]);
+
+                    if (!_map[currentX, currentY].IsInaccessible)
+                    {
+                        _map[currentX, currentY].MovementCostFromCurrentAdjacent = _DIAGONAL_MOVEMENT_COST;
+                        nodes.Add(_map[currentX, currentY]);
+                    }
                 }
 
                 //Right Node
@@ -155,8 +170,12 @@ namespace PathFinderAlgorithms
                 if (IsInMapBounds(currentX, currentY))
                 {
                     _map[currentX, currentY] = GetSingleAdjacentNode(currentX, currentY);
-                    _map[currentX, currentY].MovementCostFromCurrentAdjacent = _LINEAR_MOVEMENT_COST;
-                    nodes.Add(_map[currentX, currentY]);
+
+                    if (!_map[currentX, currentY].IsInaccessible)
+                    {
+                        _map[currentX, currentY].MovementCostFromCurrentAdjacent = _LINEAR_MOVEMENT_COST;
+                        nodes.Add(_map[currentX, currentY]);
+                    }
                 }
 
                 //Bottom Right Node
@@ -166,8 +185,12 @@ namespace PathFinderAlgorithms
                 if (IsInMapBounds(currentX, currentY))
                 {
                     _map[currentX, currentY] = GetSingleAdjacentNode(currentX, currentY);
-                    _map[currentX, currentY].MovementCostFromCurrentAdjacent = _DIAGONAL_MOVEMENT_COST;
-                    nodes.Add(_map[currentX, currentY]);
+
+                    if (!_map[currentX, currentY].IsInaccessible)
+                    {
+                        _map[currentX, currentY].MovementCostFromCurrentAdjacent = _DIAGONAL_MOVEMENT_COST;
+                        nodes.Add(_map[currentX, currentY]);
+                    }
                 }
 
                 //Bottom
@@ -177,8 +200,12 @@ namespace PathFinderAlgorithms
                 if (IsInMapBounds(currentX, currentY))
                 {
                     _map[currentX, currentY] = GetSingleAdjacentNode(currentX, currentY);
-                    _map[currentX, currentY].MovementCostFromCurrentAdjacent = _LINEAR_MOVEMENT_COST;
-                    nodes.Add(_map[currentX, currentY]);
+
+                    if (!_map[currentX, currentY].IsInaccessible)
+                    {
+                        _map[currentX, currentY].MovementCostFromCurrentAdjacent = _LINEAR_MOVEMENT_COST;
+                        nodes.Add(_map[currentX, currentY]);
+                    }
                 }
 
                 //Bottom Left
@@ -188,8 +215,12 @@ namespace PathFinderAlgorithms
                 if (IsInMapBounds(currentX, currentY))
                 {
                     _map[currentX, currentY] = GetSingleAdjacentNode(currentX, currentY);
-                    _map[currentX, currentY].MovementCostFromCurrentAdjacent = _DIAGONAL_MOVEMENT_COST;
-                    nodes.Add(_map[currentX, currentY]);
+
+                    if (!_map[currentX, currentY].IsInaccessible)
+                    {
+                        _map[currentX, currentY].MovementCostFromCurrentAdjacent = _DIAGONAL_MOVEMENT_COST;
+                        nodes.Add(_map[currentX, currentY]);
+                    }
                 }
 
                 //Left
@@ -199,8 +230,12 @@ namespace PathFinderAlgorithms
                 if (IsInMapBounds(currentX, currentY))
                 {
                     _map[currentX, currentY] = GetSingleAdjacentNode(currentX, currentY);
-                    _map[currentX, currentY].MovementCostFromCurrentAdjacent = _LINEAR_MOVEMENT_COST;
-                    nodes.Add(_map[currentX, currentY]);
+
+                    if (!_map[currentX, currentY].IsInaccessible)
+                    {
+                        _map[currentX, currentY].MovementCostFromCurrentAdjacent = _LINEAR_MOVEMENT_COST;
+                        nodes.Add(_map[currentX, currentY]);
+                    }
                 }
 
                 return nodes.ToArray();
@@ -300,7 +335,7 @@ namespace PathFinderAlgorithms
                 return false;
             }
 
-            private Node GetNodeWithLowestMovementCost(Node[] nodes)
+            private Node GetNodeWithLowestCost(Node[] nodes)
             {
                 Node smallestCurrentNode = null;
 
@@ -318,6 +353,31 @@ namespace PathFinderAlgorithms
                 }
 
                 return smallestCurrentNode;
+            }
+
+            private void MarkObstaclesAsInaccessible(Rectangle[] obstacles)
+            {
+                foreach(var obstacle in obstacles)
+                {
+                    var startX = obstacle.x;
+                    var startY = obstacle.y;
+                    var endX = obstacle.x + obstacle.Width;
+                    var endY = obstacle.y + obstacle.Height;
+
+
+                    for (int i = startY; i <= endY; i++)
+                    {
+                        for (int ii = startX; ii <= endX; ii++)
+                        {
+                            if (_map[ii, i] == null)
+                                _map[ii, i] = new Node(ii, i, _destination.x, _destination.y);
+
+                            _map[ii, i].IsInaccessible = true;
+                        }
+                    }
+
+
+                }
             }
     
 #endregion

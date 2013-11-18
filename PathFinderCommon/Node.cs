@@ -26,5 +26,6 @@ namespace PathFinderCommon
         public int MovementCostFromCurrentAdjacent { get; set; }
         public int TotalCost { get { return Heuristic + MovementCost; } }
         public bool PreviouslyCreated { get; set; }
+        public bool IsInaccessible { get; set; }
     }
 }

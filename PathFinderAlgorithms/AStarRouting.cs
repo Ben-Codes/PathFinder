@@ -12,7 +12,7 @@ namespace PathFinderAlgorithms
 
 #region "Private Variables"
 
-        private int _DIAGONAL_MOVEMENT_COST = 12;
+        private int _DIAGONAL_MOVEMENT_COST = 14;
         private int _LINEAR_MOVEMENT_COST = 10;
 
         private int _mapHeight;
@@ -30,22 +30,12 @@ namespace PathFinderAlgorithms
 
         public Point[] FindRoute(PathingMap pathingMap)
         {
-            //init class variables
-            _mapHeight = pathingMap.Stage.Height;
-            _mapWidth = pathingMap.Stage.Width;
-            _origin = pathingMap.Origin;
-            _destination = pathingMap.Destination;
+
+            InitializeClassWithIncomingVariables(pathingMap);
+            ClearExistingLists();
             
-
-            _openList.Clear();
-            _closedList.Clear();
-
-            //Create Map
-            _map = new Node[_mapWidth, _mapHeight];
-
             //Create Origin Node
             _map[_origin.x, _origin.y] = new Node(_origin.x, _origin.y, _destination.x, _destination.y);
-
 
             MarkObstaclesAsInaccessible(pathingMap.Obstacles);
 
@@ -76,7 +66,7 @@ namespace PathFinderAlgorithms
                         //If the node already exists see if its more effcient to travese from the current Node
                         if (_adjacentsNodes[i].PreviouslyCreated)
                         {
-                            if ((currentNode.MovementCost + _adjacentsNodes[i].MovementCostFromCurrentAdjacent) < _adjacentsNodes[i].MovementCost)
+                            if (((currentNode.MovementCost + _adjacentsNodes[i].MovementCostFromCurrentAdjacent) + _adjacentsNodes[i].Heuristic) < _adjacentsNodes[i].TotalCost)
                                 _adjacentsNodes[i].Parent = currentNode;
                         }
                         else
@@ -110,131 +100,35 @@ namespace PathFinderAlgorithms
 
 #region "private Methods"
 
-            //TODO: needs to be broken up if possible, lotsa of dup code.
             private Node[] GetAdjacentNodes(Node centerNode)
             {
                 int currentX, currentY;
                 List<Node> nodes = new List<Node>(7);
 
-                //Top Left Node
-                currentX = centerNode.Location.x - 1;
-                currentY = centerNode.Location.y - 1;
+                //List of all the relative postions of nodes
+                var nodeDeffX = new int[8] { -1, 0, 1, 1, 1, 0, -1,-1 };
+                var nodeDeffY = new int[8] { -1, -1, -1, 0, 1, 1, 1, 0 };
 
-                if (IsInMapBounds(currentX, currentY))
+                for (int i = 0; i < 8; i++)
                 {
-                    _map[currentX, currentY] = GetSingleAdjacentNode(currentX, currentY);
+                    //Top Left Node
+                    currentX = centerNode.Location.x + nodeDeffX[i];
+                    currentY = centerNode.Location.y + nodeDeffY[i];
 
-                    if (!_map[currentX, currentY].IsInaccessible)
+                    if (IsInMapBounds(currentX, currentY))
                     {
-                        _map[currentX, currentY].MovementCostFromCurrentAdjacent = _DIAGONAL_MOVEMENT_COST;
+                        _map[currentX, currentY] = GetSingleAdjacentNode(currentX, currentY);
 
-                        nodes.Add( _map[currentX, currentY]);
-                    }
-                }
+                        if (!_map[currentX, currentY].IsInaccessible)
+                        {
+                            //if the abs value matches then we know its diagonal
+                            if (Math.Abs(nodeDeffX[i]) == Math.Abs(nodeDeffY[i]))
+                                _map[currentX, currentY].MovementCostFromCurrentAdjacent = _DIAGONAL_MOVEMENT_COST;
+                            else
+                                _map[currentX, currentY].MovementCostFromCurrentAdjacent = _LINEAR_MOVEMENT_COST;
 
-                //Top Node
-                currentX = centerNode.Location.x;
-                currentY = centerNode.Location.y - 1;
-
-                if (IsInMapBounds(currentX, currentY))
-                {
-                    _map[currentX, currentY] = GetSingleAdjacentNode(currentX, currentY);
-
-                    if (!_map[currentX, currentY].IsInaccessible)
-                    {
-                        _map[currentX, currentY].MovementCostFromCurrentAdjacent = _LINEAR_MOVEMENT_COST;
-                        nodes.Add(_map[currentX, currentY]);
-                    }
-                }
-
-
-                //Top Right Node
-                currentX = centerNode.Location.x + 1;
-                currentY = centerNode.Location.y - 1;
-
-                if (IsInMapBounds(currentX, currentY))
-                {
-                    _map[currentX, currentY] = GetSingleAdjacentNode(currentX, currentY);
-
-                    if (!_map[currentX, currentY].IsInaccessible)
-                    {
-                        _map[currentX, currentY].MovementCostFromCurrentAdjacent = _DIAGONAL_MOVEMENT_COST;
-                        nodes.Add(_map[currentX, currentY]);
-                    }
-                }
-
-                //Right Node
-                currentX = centerNode.Location.x + 1;
-                currentY = centerNode.Location.y;
-
-                if (IsInMapBounds(currentX, currentY))
-                {
-                    _map[currentX, currentY] = GetSingleAdjacentNode(currentX, currentY);
-
-                    if (!_map[currentX, currentY].IsInaccessible)
-                    {
-                        _map[currentX, currentY].MovementCostFromCurrentAdjacent = _LINEAR_MOVEMENT_COST;
-                        nodes.Add(_map[currentX, currentY]);
-                    }
-                }
-
-                //Bottom Right Node
-                currentX = centerNode.Location.x + 1;
-                currentY = centerNode.Location.y + 1;
-
-                if (IsInMapBounds(currentX, currentY))
-                {
-                    _map[currentX, currentY] = GetSingleAdjacentNode(currentX, currentY);
-
-                    if (!_map[currentX, currentY].IsInaccessible)
-                    {
-                        _map[currentX, currentY].MovementCostFromCurrentAdjacent = _DIAGONAL_MOVEMENT_COST;
-                        nodes.Add(_map[currentX, currentY]);
-                    }
-                }
-
-                //Bottom
-                currentX = centerNode.Location.x;
-                currentY = centerNode.Location.y + 1;
-
-                if (IsInMapBounds(currentX, currentY))
-                {
-                    _map[currentX, currentY] = GetSingleAdjacentNode(currentX, currentY);
-
-                    if (!_map[currentX, currentY].IsInaccessible)
-                    {
-                        _map[currentX, currentY].MovementCostFromCurrentAdjacent = _LINEAR_MOVEMENT_COST;
-                        nodes.Add(_map[currentX, currentY]);
-                    }
-                }
-
-                //Bottom Left
-                currentX = centerNode.Location.x - 1;
-                currentY = centerNode.Location.y + 1;
-
-                if (IsInMapBounds(currentX, currentY))
-                {
-                    _map[currentX, currentY] = GetSingleAdjacentNode(currentX, currentY);
-
-                    if (!_map[currentX, currentY].IsInaccessible)
-                    {
-                        _map[currentX, currentY].MovementCostFromCurrentAdjacent = _DIAGONAL_MOVEMENT_COST;
-                        nodes.Add(_map[currentX, currentY]);
-                    }
-                }
-
-                //Left
-                currentX = centerNode.Location.x - 1;
-                currentY = centerNode.Location.y;
-
-                if (IsInMapBounds(currentX, currentY))
-                {
-                    _map[currentX, currentY] = GetSingleAdjacentNode(currentX, currentY);
-
-                    if (!_map[currentX, currentY].IsInaccessible)
-                    {
-                        _map[currentX, currentY].MovementCostFromCurrentAdjacent = _LINEAR_MOVEMENT_COST;
-                        nodes.Add(_map[currentX, currentY]);
+                            nodes.Add(_map[currentX, currentY]);
+                        }
                     }
                 }
 
@@ -378,6 +272,23 @@ namespace PathFinderAlgorithms
 
 
                 }
+            }
+
+            private void InitializeClassWithIncomingVariables(PathingMap pathingMap)
+            {
+                //init class variables
+                _mapHeight = pathingMap.Stage.Height;
+                _mapWidth = pathingMap.Stage.Width;
+                _origin = pathingMap.Origin;
+                _destination = pathingMap.Destination;
+
+                _map = new Node[_mapWidth, _mapHeight];
+            }
+
+            private void ClearExistingLists()
+            {
+                _openList.Clear();
+                _closedList.Clear();
             }
     
 #endregion

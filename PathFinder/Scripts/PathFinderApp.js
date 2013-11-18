@@ -134,6 +134,8 @@
                     boxlayer.draw();
                 }
 
+                GetPath();
+
                 break;
             case 40:
                 /* Down arrow was pressed */
@@ -149,6 +151,8 @@
                     localBox.setY(localBox.getY() + 50);
                     boxlayer.draw();
                 }
+
+                GetPath();
 
                 break;
             case 37:
@@ -168,6 +172,8 @@
                     boxlayer.draw();
                 }
 
+                GetPath();
+
                 break;
             case 39:
                 /* Right arrow was pressed */
@@ -182,6 +188,8 @@
                     localBox.setX(localBox.getX() + 50);
                     boxlayer.draw();
                 }
+
+                GetPath();
 
                 break;
         }

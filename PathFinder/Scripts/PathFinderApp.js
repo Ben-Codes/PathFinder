@@ -3,6 +3,12 @@
 
     //Listeners
     $('#CalcBtn').on("click", function () {
+        GetPath();
+    });
+
+
+    function GetPath() {
+
         var points = {
             Stage: {
                 Height: stage.getHeight(),
@@ -16,14 +22,12 @@
                 X: destination.getX(),
                 Y: destination.getY()
             },
-            Obstacle: {
-                Location: {
-                    X: box.getX(),
-                    Y: box.getY()
-                },
+            Obstacles: [{
+                x: box.getX(),
+                y: box.getY(),
                 Height: box.getHeight(),
                 Width: box.getWidth()
-            }
+            }]
         };
 
         $.ajax({
@@ -36,7 +40,7 @@
                 renderPoints(data);
             }
         });
-    });
+    }
 
 
     //Grid Stage
@@ -91,13 +95,18 @@
         var xPos = 50 * Math.round(localBox.getX() / 50);
         var yPos = 50 * Math.round(localBox.getY() / 50);
 
+        pathLayer.clear();
+
         localBox.setX(xPos);
         localBox.setY(yPos);
         boxlayer.draw();
+
+        GetPath();
     });
 
     box.on('mousedown', function (evnt) {
         box.setStrokeWidth(4);
+
     });
 
     window.addEventListener('keydown', doKeyDown, true);
@@ -111,6 +120,7 @@
                 /* Up arrow was pressed */
 
                 var localBox = box;
+                pathLayer.clear();
 
                 if (isShift) {
                     if (localBox.getHeight() > 50)
@@ -129,6 +139,7 @@
                 /* Down arrow was pressed */
 
                 var localBox = box;
+                pathLayer.clear();
 
                 if (isShift) {
                     localBox.setHeight(localBox.getHeight() + 50);
@@ -144,10 +155,12 @@
                 /* Left arrow was pressed */
 
                 var localBox = box;
+                pathLayer.clear();
 
                 if (isShift) {
                     if (localBox.getWidth() > 50)
                         localBox.setWidth(localBox.getWidth() - 50);
+
                     boxlayer.draw();
 
                 } else {
@@ -159,6 +172,7 @@
             case 39:
                 /* Right arrow was pressed */
                 var localBox = box;
+                pathLayer.clear();
 
                 if (isShift) {
                     localBox.setWidth(localBox.getWidth() + 50);
@@ -177,6 +191,7 @@
     box.on('mouseover', function () {
         document.body.style.cursor = 'pointer';
     });
+
     box.on('mouseout', function () {
         document.body.style.cursor = 'default';
     });
@@ -201,6 +216,7 @@
     endpointLayer.add(destination);
 
     var pathLayer = new Kinetic.Layer();
+    var redLine;
 
     stage.add(endpointLayer);
     stage.add(boxlayer);
@@ -211,8 +227,9 @@
     stage.add(boxlayer);
 
     function renderPoints(points) {
-        debugger;
-        var redLine = new Kinetic.Line({
+
+        pathLayer.removeChildren();
+        redLine = new Kinetic.Line({
             points: points,
             stroke: 'red',
             strokeWidth: 5,

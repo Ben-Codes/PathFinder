@@ -28,6 +28,11 @@ namespace PathFinderAlgorithms
 
 #region "Public Methods"
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pathingMap"></param>
+        /// <returns></returns>
         public Point[] FindRoute(PathingMap pathingMap)
         {
 
@@ -55,8 +60,12 @@ namespace PathFinderAlgorithms
             while (!_destinationFound)
             {
                 var currentNode = GetNodeWithSmallesCost();
-                AddToClosedList(currentNode);
 
+                //No more nodes, path not possable
+                if (currentNode == null)
+                    return null;
+
+                AddToClosedList(currentNode);
                 _adjacentsNodes = GetAdjacentNodes(currentNode);
 
                 for (int i = 0; i < _adjacentsNodes.Length; i++)
@@ -66,7 +75,9 @@ namespace PathFinderAlgorithms
                         //If the node already exists see if its more effcient to travese from the current Node
                         if (_adjacentsNodes[i].PreviouslyCreated)
                         {
-                            if (((currentNode.MovementCost + _adjacentsNodes[i].MovementCostFromCurrentAdjacent) + _adjacentsNodes[i].Heuristic) < _adjacentsNodes[i].TotalCost)
+                            var potentalNewValue = currentNode.MovementCost + _adjacentsNodes[i].MovementCostFromCurrentAdjacent + _adjacentsNodes[i].Heuristic;
+
+                            if ( potentalNewValue < _adjacentsNodes[i].TotalCost)
                                 _adjacentsNodes[i].Parent = currentNode;
                         }
                         else
@@ -78,7 +89,7 @@ namespace PathFinderAlgorithms
                                 _openList.Add(_adjacentsNodes[i]);
                         }
 
-                        //check to make sure we havent arrived at destination
+                        //check to see if we have arrived at the destination
                         if (_adjacentsNodes[i].Heuristic < 3)
                         {
                             if (IsAjacentToDestination(_adjacentsNodes[i]))
@@ -93,7 +104,6 @@ namespace PathFinderAlgorithms
             Node finalNode = GetNodeWithLowestCost(_adjacentsNodes);
             return GetPath(finalNode);
         }
-
 
 
 #endregion
@@ -137,6 +147,9 @@ namespace PathFinderAlgorithms
 
             private Node GetNodeWithSmallesCost()
             {
+                if (_openList.Count == 0)
+                    return null;
+
                 var smallestCurrentNode = _openList[0];
 
                 foreach (Node node in _openList)
